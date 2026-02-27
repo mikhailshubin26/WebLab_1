@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% macro render_comment(c) %}
+  <div class="d-flex mb-3 comment">
+    <div class="comment-avatar me-3" aria-hidden="true"></div>
+
+    <div class="flex-grow-1">
+      <div class="comment-author fw-bold">{{ c.author }}</div>
+      <div class="comment-text">{{ c.text }}</div>
+
+      {% if c.replies %}
+        <div class="ms-5 mt-3">
+          {% for r in c.replies %}
+            {{ render_comment(r) }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% block content %}
+  <article class="post">
+    <h1 class="my-4">{{ post.title }}</h1>
+    <div class="text-muted mb-3">
+      {{ post.author }}, {{ post.date.strftime('%d.%m.%Y') }}
+    </div>
+
+    <img class="img-fluid border rounded mb-4"
+         src="{{ url_for('static', filename='images/' + post.image_id) }}"
+         alt="Post image">
+
+    <div class="post-text mb-5">
+      {{ post.text }}
+    </div>
+
+    <section class="mb-5">
+      <h5 class="mb-3">Оставьте комментарий</h5>
+      <form action="#" method="post">
+        <div class="mb-3">
+          <textarea class="form-control" rows="4" placeholder="Введите текст комментария..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+      </form>
+    </section>
+
+    <section class="mb-4">
+      {% for c in post.comments %}
+        {{ render_comment(c) }}
+      {% endfor %}
+    </section>
+  </article>
+{% endblock %}

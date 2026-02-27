@@ -1,0 +1,19 @@
+body {
+    font-size: 1.25rem;
+}
+
+.avatar {
+    max-width: 100%;
+}
+
+.comment-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #d6d6d6;
+  flex: 0 0 44px;
+}
+
+.comment-text {
+  font-size: 1.05rem;
+}
